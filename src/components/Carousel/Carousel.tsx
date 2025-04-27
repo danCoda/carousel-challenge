@@ -67,7 +67,8 @@ export const Carousel = () => {
         {visibleItems.map((item) => (
           <CarouselItem
             key={item.id}
-            isCurrent={item.id === items[currentIndex]?.id}
+            data-testid={`carousel-item-${item.id}`}
+            $isCurrent={item.id === items[currentIndex]?.id}
             onClick={() => handleItemClick(item.id)}
           >
             <img src={item.image} alt={item.title} />

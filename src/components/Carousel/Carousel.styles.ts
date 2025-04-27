@@ -20,12 +20,16 @@ export const SkeletonItem = styled.div`
   }
 `;
 
-export const CarouselItem = styled.div<{ isCurrent: boolean }>`
+interface CarouselItemProps {
+  $isCurrent: boolean;
+}
+
+export const CarouselItem = styled.div<CarouselItemProps>`
   img {
     width: 100%;
     object-fit: cover;
-    border: ${({ isCurrent, theme }) =>
-      isCurrent ? `2px solid ${theme.colors.primary}` : "none"};
+    border: ${({ $isCurrent, theme }) =>
+      $isCurrent ? `2px solid ${theme.colors.primary}` : "none"};
   }
 `;
 
