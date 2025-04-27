@@ -5,6 +5,7 @@ Please note, I have decided to use AI assistance ([Claude](https://claude.ai/)) 
 * the unit tests (I do not have much practice with unit testing at Optus) 
 * the carousel (I have created a carousel in the past [(desktop only)](https://nextjs-desktop-carousel.vercel.app/), and this time round, I wanted to see how much AI assistance could help)
 * Styled Components - I do not have much practice with this library.
+* Webpack - I do not much experience with this bundler.
 
 If I were to spend more time with this, I would have used: 
 
@@ -28,4 +29,5 @@ To install and run the development server:
 
 #### Other projects
 
-* [Personal resume website](https://dan-son-resume.vercel.app/) - soomething I made a few weeks ago for fun. ([GitHub](https://github.com/danCoda/resume))
+* [Personal resume website](https://dan-son-resume.vercel.app/) - something I made a few weeks ago for fun. ([GitHub](https://github.com/danCoda/resume))
+* [(desktop only) carousel from an older project](https://nextjs-desktop-carousel.vercel.app/)
