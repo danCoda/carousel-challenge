@@ -103,8 +103,6 @@ describe("Carousel", () => {
     });
 
     renderCarousel();
-
-    // Wait for items to load
     await screen.findAllByRole("img");
 
     // Test right arrow navigation
@@ -141,10 +139,8 @@ describe("Carousel", () => {
     });
 
     renderCarousel();
-
     const items = await screen.findAllByRole("img");
     fireEvent.click(items[0]);
-
     expect(mockNavigate).toHaveBeenCalledWith("/program/1");
   });
 });
