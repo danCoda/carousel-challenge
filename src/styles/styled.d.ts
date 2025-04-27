@@ -1,10 +1,10 @@
 import "styled-components";
 
 declare module "styled-components" {
-  export type DefaultTheme = {
+  export interface DefaultTheme {
     breakpoints: {
-      hd: string; // 720p
-      fullHd: string; // 1080p
+      hd: string;
+      fullHd: string;
     };
     maxWidths: {
       hd: string;
@@ -21,5 +21,5 @@ declare module "styled-components" {
         fullHd: string;
       };
     };
-  };
+  }
 }
