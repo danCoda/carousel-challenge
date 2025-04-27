@@ -1,11 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app.js'
+    filename: 'app.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -17,11 +19,17 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js'],
+    modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html'
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/data.json', to: 'data.json' }
+      ]
     })
   ],
   devServer: {
