@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   CarouselTrack,
@@ -6,32 +7,17 @@ import {
   ErrorMessage,
   SkeletonItem,
 } from "./Carousel.styles";
-import type { Movie } from "../../types";
+import { usePrograms } from "../../context/ProgramContext";
 
 const VISIBLE_ITEMS = 6;
 
 export const Carousel: React.FC = () => {
-  const [items, setItems] = useState<Movie[]>([]);
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const { items, isLoading, error } = usePrograms();
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch("/data.json");
-      if (!response.ok)
-        throw new Error("An unknown error occured. Please try again laterrr");
-      const data = await response.json();
-      setItems(data);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        console.log("Unknown error:", err);
-      }
-    } finally {
-      setIsLoading(false);
-    }
+  const handleItemClick = (id: number) => {
+    navigate(`/program/${id}`);
   };
 
   const handleKeyDown = useCallback(
@@ -45,19 +31,15 @@ export const Carousel: React.FC = () => {
           break;
         case "Enter":
           if (items[currentIndex]) {
-            console.log("Selected:", items[currentIndex].title);
+            navigate(`/program/${items[currentIndex].id}`);
           }
           break;
       }
     },
-    [items.length, currentIndex]
+    [items.length, currentIndex, navigate]
   );
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
+  React.useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
@@ -92,6 +74,7 @@ export const Carousel: React.FC = () => {
           <CarouselItem
             key={item.id}
             isCurrent={item.id === items[currentIndex]?.id}
+            onClick={() => handleItemClick(item.id)}
           >
             <img src={item.image} alt={item.title} />
             <h3>{item.title}</h3>

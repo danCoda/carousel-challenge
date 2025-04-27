@@ -19,7 +19,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js', '.jsx'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
   plugins: [
@@ -36,6 +36,7 @@ module.exports = {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
+    historyApiFallback: true,
     hot: true,
     port: 3000
   }
