@@ -1,10 +1,15 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import { media } from "../../styles/media";
 
 export const ProgramContainer = styled.div`
   padding: 2rem;
-  color: white;
-  max-width: 1200px;
+  color: ${({ theme }) => theme.colors.text};
+  max-width: ${({ theme }) => theme.maxWidths.hd};
   margin: 0 auto;
+
+  ${media.fullHd} {
+    max-width: ${({ theme }) => theme.maxWidths.fullHd};
+  }
 `;
 
 export const ContentWrapper = styled.div`
@@ -13,8 +18,8 @@ export const ContentWrapper = styled.div`
   gap: 2rem;
   margin-top: 2rem;
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+  ${media.fullHd} {
+    grid-template-columns: 400px 1fr;
   }
 `;
 
@@ -27,38 +32,23 @@ export const ImageContainer = styled.div`
 `;
 
 export const InfoContainer = styled.div`
-  h1 {
-    margin-bottom: 1rem;
-    font-size: 2.5rem;
-  }
-
   .metadata {
     display: flex;
     gap: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     color: #ccc;
-    font-size: 1.1rem;
+
+    span {
+      white-space: nowrap;
+    }
   }
 
   .description {
     line-height: 1.6;
-    margin-bottom: 2rem;
-    font-size: 1.2rem;
-  }
-`;
+    font-size: 1rem;
 
-export const BackButton = styled.button`
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.1rem;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  
-  &:hover {
-    color: #ccc;
+    ${media.fullHd} {
+      font-size: 1.2rem;
+    }
   }
 `;

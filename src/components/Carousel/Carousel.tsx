@@ -1,17 +1,18 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
   CarouselTrack,
   CarouselItem,
   ErrorMessage,
-  SkeletonItem,
 } from "./Carousel.styles";
 import { usePrograms } from "../../context/ProgramContext";
+import { SkeletonCarousel } from "./SkeletonCarousel";
 
-const VISIBLE_ITEMS = 6;
+export const MAX_ITEMS = 6;
+const ITEMS_PER_SIDE = 2;
 
-export const Carousel: React.FC = () => {
+export const Carousel = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { items, isLoading, error } = usePrograms();
@@ -24,10 +25,12 @@ export const Carousel: React.FC = () => {
     (event: KeyboardEvent) => {
       switch (event.key) {
         case "ArrowLeft":
-          setCurrentIndex((prev) => (prev > 0 ? prev - 1 : items.length - 1));
+          setCurrentIndex((prev) => (prev > 0 ? prev - 1 : 0));
           break;
         case "ArrowRight":
-          setCurrentIndex((prev) => (prev + 1) % items.length);
+          setCurrentIndex((prev) =>
+            prev === items.length - 1 ? prev : prev + 1
+          );
           break;
         case "Enter":
           if (items[currentIndex]) {
@@ -39,7 +42,7 @@ export const Carousel: React.FC = () => {
     [items.length, currentIndex, navigate]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
@@ -49,23 +52,14 @@ export const Carousel: React.FC = () => {
   }
 
   if (isLoading) {
-    return (
-      <Container>
-        <CarouselTrack>
-          {Array.from({ length: VISIBLE_ITEMS }).map((_, index) => (
-            <SkeletonItem key={index}>
-              <div className="skeleton-image" />
-            </SkeletonItem>
-          ))}
-        </CarouselTrack>
-      </Container>
-    );
+    return <SkeletonCarousel />;
   }
 
-  const visibleItems = items.slice(
-    Math.max(0, currentIndex - Math.floor(VISIBLE_ITEMS / 2)),
-    Math.max(0, currentIndex - Math.floor(VISIBLE_ITEMS / 2)) + VISIBLE_ITEMS
+  const startIndex = Math.max(
+    0,
+    currentIndex - Math.floor(MAX_ITEMS / ITEMS_PER_SIDE)
   );
+  const visibleItems = items.slice(startIndex, startIndex + MAX_ITEMS);
 
   return (
     <Container>
@@ -77,7 +71,6 @@ export const Carousel: React.FC = () => {
             onClick={() => handleItemClick(item.id)}
           >
             <img src={item.image} alt={item.title} />
-            <h3>{item.title}</h3>
           </CarouselItem>
         ))}
       </CarouselTrack>

@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import { media } from "../../styles/media";
 
 export const Container = styled.div`
   display: flex;
@@ -6,40 +7,26 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #282c34;
-  color: white;
+  background-color: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.text};
   padding: 20px;
-  
+
   h1 {
-    font-size: 24px;
-    text-align: center;
-  }
+    display: inline;
+    font-size: ${({ theme }) => theme.typography.h1.hd};
 
-  @media (min-width: 1280px) {
-    padding: 30px;
-    h1 {
-      font-size: 32px;
-    }
-  }
-
-  @media (min-width: 1920px) {
-    padding: 40px;
-    h1 {
-      font-size: 48px;
+    ${media.fullHd} {
+      font-size: ${({ theme }) => theme.typography.h1.fullHd};
     }
   }
 `;
 
 export const Content = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: ${({ theme }) => theme.maxWidths.hd};
   margin: 0 auto;
-  
-  @media (min-width: 1280px) {
-    max-width: 1024px;
-  }
-  
-  @media (min-width: 1920px) {
-    max-width: 1440px;
+
+  ${media.fullHd} {
+    max-width: ${({ theme }) => theme.maxWidths.fullHd};
   }
 `;

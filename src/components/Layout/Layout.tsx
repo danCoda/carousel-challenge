@@ -1,19 +1,17 @@
-import React, { PropsWithChildren } from 'react';
-import { Container, Content } from './Layout.styles';
+import { PropsWithChildren } from "react";
+import { Container, Content } from "./Layout.styles";
 
-interface LayoutProps {
+type LayoutProps = {
   className?: string;
-}
+};
 
-export const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({ 
-  children, 
-  className 
+export const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({
+  children,
+  className,
 }) => {
   return (
     <Container className={className}>
-      <Content>
-        {children}
-      </Content>
+      <Content>{children}</Content>
     </Container>
   );
 };

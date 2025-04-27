@@ -1,29 +1,30 @@
-import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { 
-  ProgramContainer, 
-  ContentWrapper, 
-  ImageContainer, 
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  ProgramContainer,
+  ContentWrapper,
+  ImageContainer,
   InfoContainer,
-} from './Program.styles';
-import { usePrograms } from '../../context/ProgramContext';
+} from "./Program.styles";
+import { usePrograms } from "../../context/ProgramContext";
+import MetadataProgram from "./MetadataProgram";
 
-export const Program: React.FC = () => {
+export const Program = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { items, isLoading, error } = usePrograms();
 
-  const item = items.find(item => item.id === Number(id));
+  const item = items.find((item) => item.id === Number(id));
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Backspace') {
-      navigate('/');
+    if (event.key === "Backspace") {
+      navigate("/");
     }
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   if (isLoading) {
@@ -31,7 +32,7 @@ export const Program: React.FC = () => {
   }
 
   if (error || !item) {
-    return <ProgramContainer>{error || 'Program not found'}</ProgramContainer>;
+    return <ProgramContainer>{error || "Program not found"}</ProgramContainer>;
   }
 
   return (
@@ -42,19 +43,8 @@ export const Program: React.FC = () => {
         </ImageContainer>
         <InfoContainer>
           <h1>{item.title}</h1>
-          <div className="metadata">
-            <span>{item.year}</span>
-            <span>•</span>
-            <span>{item.rating}</span>
-            <span>•</span>
-            <span>{item.genre}</span>
-          </div>
+          <MetadataProgram metadata={item}/>
           <p className="description">{item.description}</p>
-          <div className="metadata">
-            <span>Type: {item.type}</span>
-            <span>•</span>
-            <span>Language: {item.language}</span>
-          </div>
         </InfoContainer>
       </ContentWrapper>
     </ProgramContainer>
